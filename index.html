@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>A quick survey for lifters</title>
+<meta property="og:title" content="A quick survey for lifters">
+<meta property="og:description" content="Four names, about 4 minutes. First impressions only.">
+<style>
+  html, body { margin: 0; height: 100%; background: #fff; color: #111;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; }
+  main { display: flex; height: 100%; align-items: center; justify-content: center; padding: 0 16px; }
+  a { color: #111; }
+</style>
+<script>
+  // Sends each visitor to one of four survey versions at random (Latin-square name orders),
+  // carrying the ?source= tag through and adding the version letter.
+  (function () {
+    var forms = { A: "RG7YDl", B: "Ek4DWo", C: "rjxLPM", D: "44gvrb" };
+    var keys = ["A", "B", "C", "D"];
+    var r = new Uint32Array(1);
+    (window.crypto || window.msCrypto).getRandomValues(r);
+    var v = keys[r[0] % 4];
+    var params = new URLSearchParams(window.location.search);
+    var source = params.get("source") || "direct";
+    var url = "https://tally.so/r/" + forms[v] +
+      "?source=" + encodeURIComponent(source) + "&version=" + v;
+    window.location.replace(url);
+  })();
+</script>
+</head>
+<body>
+<main>
+  <p>Opening the survey… <noscript><a href="https://tally.so/r/RG7YDl?source=noscript&version=A">Continue</a></noscript></p>
+</main>
+</body>
+</html>
