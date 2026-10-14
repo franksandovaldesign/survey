@@ -15,7 +15,7 @@
 </style>
 <script>
   // Sends each visitor to one of four survey versions at random (Latin-square name orders),
-  // carrying the ?source= tag through and adding the version letter.
+  // carrying the ?source= tag (and any other parameters) through and adding the version letter.
   (function () {
     var forms = { A: "RG7YDl", B: "Ek4DWo", C: "rjxLPM", D: "44gvrb" };
     var keys = ["A", "B", "C", "D"];
@@ -23,9 +23,10 @@
     (window.crypto || window.msCrypto).getRandomValues(r);
     var v = keys[r[0] % 4];
     var params = new URLSearchParams(window.location.search);
-    var source = params.get("source") || "direct";
-    var url = "https://tally.so/r/" + forms[v] +
-      "?source=" + encodeURIComponent(source) + "&version=" + v;
+    if (!params.get("source")) params.set("source", "direct");
+    params.set("version", v);
+    // every other parameter (e.g. PROLIFIC_PID, STUDY_ID, SESSION_ID from the panel) is passed through unchanged
+    var url = "https://tally.so/r/" + forms[v] + "?" + params.toString();
     window.location.replace(url);
   })();
 </script>
